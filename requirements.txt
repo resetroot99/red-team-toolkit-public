@@ -1,0 +1,5 @@
+# RED Team Toolkit - Public Version Requirements
+# Minimal dependencies for demo functionality
+
+requests>=2.31.0
+colorama>=0.4.6
