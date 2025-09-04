@@ -160,7 +160,15 @@ class RedTeamToolkit:
     def display_banner(self):
         """Display application banner"""
         print("\n" + "="*60)
-        print("🛡️  RED TEAM TOOLKIT v" + __version__)
+        print("""
+██████╗ ███████╗██████╗ 
+██╔══██╗██╔════╝██╔══██╗
+██████╔╝█████╗  ██║  ██║
+██╔══██╗██╔══╝  ██║  ██║
+██║  ██║███████╗██████╔╝
+╚═╝  ╚═╝╚══════╝╚═════╝ 
+        """)
+        print("    Advanced Penetration Testing Framework v" + __version__)
         print("    Strat24 Research + V3ctor Security")
         print("="*60)
     
@@ -288,23 +296,121 @@ class RedTeamToolkit:
         """Reconnaissance tools menu"""
         print("\n🔍 RECONNAISSANCE TOOLS")
         print("-"*30)
-        print("Demo Version - Limited Functionality")
-        print("• Network scanning simulation")
-        print("• Domain enumeration demo")
-        print("• Port scanning example")
-        print("\n📧 Contact sudo@hxcode.xyz for full version")
-        input("\nPress Enter to continue...")
+        
+        while True:
+            print("\nAvailable Tools:")
+            print("1. 🌐 Network Discovery")
+            print("2. 🔍 Port Scanner")
+            print("3. 📄 Banner Grabber")
+            print("0. ← Back to Main Menu")
+            
+            choice = input("\nSelect tool: ").strip()
+            
+            if choice == '1':
+                try:
+                    from modules.recon.network_discovery import main as network_discovery
+                    network_discovery()
+                except ImportError:
+                    print("❌ Network discovery module not available")
+                    input("Press Enter to continue...")
+                    
+            elif choice == '2':
+                try:
+                    from modules.network.port_scanner import main as port_scanner
+                    port_scanner()
+                except ImportError:
+                    print("❌ Port scanner module not available")
+                    input("Press Enter to continue...")
+                    
+            elif choice == '3':
+                try:
+                    from modules.exploits.banner_grabber import main as banner_grabber
+                    banner_grabber()
+                except ImportError:
+                    print("❌ Banner grabber module not available")
+                    input("Press Enter to continue...")
+                    
+            elif choice == '0':
+                break
+            else:
+                print("❌ Invalid option")
     
     def exploit_menu(self):
         """Exploit framework menu"""
         print("\n💥 EXPLOIT FRAMEWORK")
         print("-"*30)
-        print("Demo Version - Limited Functionality")
-        print("• CVE database browser")
-        print("• Payload generator demo")
-        print("• Exploit templates")
-        print("\n📧 Contact sudo@hxcode.xyz for full version")
-        input("\nPress Enter to continue...")
+        
+        while True:
+            print("\nDemo Capabilities:")
+            print("1. 🔍 Service Fingerprinting")
+            print("2. 🌐 Basic Web Attacks")
+            print("3. 📊 Vulnerability Assessment")
+            print("4. 📚 CVE Information (Demo)")
+            print("0. ← Back to Main Menu")
+            
+            choice = input("\nSelect option: ").strip()
+            
+            if choice == '1':
+                try:
+                    from modules.exploits.banner_grabber import main as banner_grabber
+                    banner_grabber()
+                except ImportError:
+                    print("❌ Banner grabber module not available")
+                    input("Press Enter to continue...")
+                    
+            elif choice == '2':
+                try:
+                    from modules.exploits.web_scanner import main as web_scanner
+                    web_scanner()
+                except ImportError:
+                    print("❌ Web scanner module not available")
+                    input("Press Enter to continue...")
+                    
+            elif choice == '3':
+                print("\n📊 VULNERABILITY ASSESSMENT")
+                print("Combines reconnaissance and exploitation techniques")
+                
+                target = input("Enter target IP/hostname: ").strip()
+                if not target:
+                    continue
+                
+                try:
+                    from modules.network.port_scanner import PortScanner
+                    from modules.exploits.banner_grabber import BannerGrabber
+                    
+                    print(f"\n🎯 Assessing {target}")
+                    print("=" * 40)
+                    
+                    # Port scan
+                    scanner = PortScanner()
+                    scanner.scan_common_ports(target)
+                    
+                    # Banner grab open ports
+                    if scanner.open_ports:
+                        print("\n🔍 Grabbing service banners...")
+                        grabber = BannerGrabber()
+                        grabber.scan_multiple_ports(target, scanner.open_ports)
+                    
+                    input("\nAssessment complete. Press Enter to continue...")
+                    
+                except ImportError:
+                    print("❌ Assessment modules not available")
+                    input("Press Enter to continue...")
+                    
+            elif choice == '4':
+                print("\n📚 CVE INFORMATION (Demo)")
+                print("In the full version, this provides:")
+                print("• Real-time CVE database access")
+                print("• Exploit code generation")
+                print("• Vulnerability matching")
+                print("• Automated exploitation")
+                print("\n📧 Contact sudo@hxcode.xyz for full version")
+                input("Press Enter to continue...")
+                
+            elif choice == '0':
+                break
+            else:
+                print("❌ Invalid option")
     
     def ai_analysis_menu(self):
         """AI analysis menu"""
@@ -332,12 +438,82 @@ class RedTeamToolkit:
         """Web testing menu"""
         print("\n🌐 WEB TESTING")
         print("-"*30)
-        print("Demo Version - Limited Functionality")
-        print("• SQL injection testing")
-        print("• XSS vulnerability scanning")
-        print("• Authentication bypass")
-        print("\n📧 Contact sudo@hxcode.xyz for full version")
-        input("\nPress Enter to continue...")
+        
+        while True:
+            print("\nAvailable Tools:")
+            print("1. 🔍 Web Vulnerability Scanner")
+            print("2. 🛡️ Security Headers Check")
+            print("3. 📊 Full Website Analysis")
+            print("0. ← Back to Main Menu")
+            
+            choice = input("\nSelect tool: ").strip()
+            
+            if choice == '1':
+                try:
+                    from modules.exploits.web_scanner import main as web_scanner
+                    web_scanner()
+                except ImportError:
+                    print("❌ Web scanner module not available")
+                    input("Press Enter to continue...")
+                    
+            elif choice == '2':
+                try:
+                    from modules.exploits.web_scanner import WebScanner
+                    scanner = WebScanner()
+                    url = input("Enter URL to check headers: ").strip()
+                    if url:
+                        if not url.startswith(('http://', 'https://')):
+                            url = 'http://' + url
+                        scanner.check_security_headers(url)
+                    input("Press Enter to continue...")
+                except ImportError:
+                    print("❌ Web scanner module not available")
+                    input("Press Enter to continue...")
+                    
+            elif choice == '3':
+                print("\n🔍 FULL WEBSITE ANALYSIS")
+                print("This combines multiple scanning techniques:")
+                try:
+                    from modules.exploits.web_scanner import WebScanner
+                    from modules.network.port_scanner import PortScanner
+                    
+                    target = input("Enter website URL or IP: ").strip()
+                    if not target:
+                        continue
+                        
+                    # Extract hostname for port scanning
+                    if target.startswith(('http://', 'https://')):
+                        import urllib.parse
+                        parsed = urllib.parse.urlparse(target)
+                        hostname = parsed.hostname
+                        url = target
+                    else:
+                        hostname = target
+                        url = f"http://{target}"
+                    
+                    print(f"\n🎯 Analyzing {target}")
+                    print("=" * 50)
+                    
+                    # Port scan first
+                    print("Phase 1: Port Scanning")
+                    port_scanner = PortScanner()
+                    port_scanner.scan_common_ports(hostname)
+                    
+                    # Web vulnerability scan
+                    print("\nPhase 2: Web Vulnerability Scanning")
+                    web_scanner = WebScanner()
+                    web_scanner.scan_url(url)
+                    
+                    input("\nAnalysis complete. Press Enter to continue...")
+                    
+                except ImportError:
+                    print("❌ Analysis modules not available")
+                    input("Press Enter to continue...")
+                    
+            elif choice == '0':
+                break
+            else:
+                print("❌ Invalid option")
     
     def reporting_menu(self):
         """Reporting menu"""
